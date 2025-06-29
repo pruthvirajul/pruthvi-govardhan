@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:14
+    container_name: govardhan-postgres
+    ports:
+      - "5410:5432"
+    environment:
+      POSTGRES_DB: onboarding
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - govardhan-net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: govardhan-backend
+    ports:
+      - "3106:3106"
+    depends_on:
+      - postgres-db
+    environment:
+      PORT: 3106
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: admin123
+      DB_NAME: onboarding
+      FRONTEND_URL: http://localhost:6003
+    networks:
+      - govardhan-net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: govardhan-frontend
+    ports:
+      - "6003:80"
+    networks:
+      - govardhan-net
+
+  hr:
+    build:
+      context: ./hr-page
+    container_name: govardhan-hr
+    ports:
+      - "6004:80"
+    networks:
+      - govardhan-net
+
+volumes:
+  pgdata:
+
+networks:
+  govardhan-net:
+
