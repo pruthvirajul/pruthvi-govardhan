@@ -8,17 +8,17 @@ const fs = require("fs");
 const mime = require('mime-types');
 
 const app = express();
-const PORT = process.env.PORT || 3408;
+const PORT = process.env.PORT || 3106;
 
 // CORS Setup
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
-    "http://44.223.23.14:8029",
-    "http://44.223.23.14:3408",
-    "http://127.0.0.1:5500",
-    "http://localhost:5500",
-    "http://44.223.23.14:8030",
+    "http://13.60.187.200:3106",
+    "http://13.60.187.200:3106",
+    "http://13.60.187.200:3106",
+    "http://13.60.187.200:3106",
+    "http://13.60.187.200:3106",
     "http://employee-frontend:80",
     "http://hr-frontend:80"
   ],
@@ -40,9 +40,9 @@ app.use('/uploads', express.static(uploadDir));
 // PostgreSQL Pool Configuration
 const pool = new Pool({
   user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'postgres-db',
+  host: process.env.DB_HOST || 'postgres',
   database: process.env.DB_NAME || 'onboarding',
-  password: process.env.DB_PASSWORD || 'admin123',
+  password: process.env.DB_PASSWORD || 'admin321',
   port: process.env.DB_PORT || 5432,
   max: 20,
   idleTimeoutMillis: 30000,
